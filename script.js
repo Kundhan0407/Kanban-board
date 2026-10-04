@@ -85,6 +85,22 @@ function createTask(text, level) {
     left.appendChild(span);
     left.appendChild(badge);
 
+    // Edit Button
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✏️";
+    editBtn.className = "edit";
+
+    editBtn.addEventListener("click", function () {
+
+        const newText = prompt("Edit your task:", span.textContent);
+
+        if (newText !== null && newText.trim() !== "") {
+            span.textContent = newText.trim();
+            saveTasks();
+        }
+
+    });
+
     // Delete Button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "❌";
@@ -98,7 +114,9 @@ function createTask(text, level) {
 
     });
 
+    // Add buttons to card
     card.appendChild(left);
+    card.appendChild(editBtn);
     card.appendChild(deleteBtn);
 
     return card;
