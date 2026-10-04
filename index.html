@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Kanban Board</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Task Management Board</h1>
+
+    <div class="board">
+
+        <!-- ================= TO DO ================= -->
+
+        <div class="column">
+
+            <h2>To Do</h2>
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a task">
+
+            <select id="priority">
+                <option value="High">🔴 High Priority</option>
+                <option value="Medium">🟡 Medium Priority</option>
+                <option value="Low">🟢 Low Priority</option>
+            </select>
+
+            <button id="addTask" class="add-btn">
+                Add Task
+            </button>
+
+            <div class="task-container" id="todo">
+
+            </div>
+
+        </div>
+
+        <!-- ================= IN PROGRESS ================= -->
+
+        <div class="column">
+
+            <h2>In Progress</h2>
+
+            <div class="task-container" id="progress">
+
+            </div>
+
+        </div>
+
+        <!-- ================= DONE ================= -->
+
+        <div class="column">
+
+            <h2>Done</h2>
+
+            <div class="task-container" id="done">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

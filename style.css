@@ -1,0 +1,285 @@
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ===========================
+   BODY
+=========================== */
+
+body{
+    background:#f4f6f9;
+    padding:30px;
+}
+
+/* ===========================
+   HEADING
+=========================== */
+
+h1{
+    text-align:center;
+    color:#333;
+    margin-bottom:30px;
+    font-size:40px;
+}
+
+/* ===========================
+   BOARD
+=========================== */
+
+.board{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+/* ===========================
+   COLUMN
+=========================== */
+
+.column{
+
+    background:white;
+
+    flex:1;
+
+    min-height:600px;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+
+}
+
+.column h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    color:#444;
+
+}
+
+/* ===========================
+   INPUT
+=========================== */
+
+input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    border:1px solid #ccc;
+
+    border-radius:6px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+input:focus{
+
+    border-color:#007bff;
+
+}
+
+/* ===========================
+   PRIORITY
+=========================== */
+
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    border-radius:6px;
+
+    border:1px solid #ccc;
+
+    font-size:16px;
+
+}
+
+/* ===========================
+   ADD BUTTON
+=========================== */
+
+.add-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    background:#007bff;
+
+    color:white;
+
+    border:none;
+
+    border-radius:6px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    margin-bottom:20px;
+
+    transition:0.3s;
+
+}
+
+.add-btn:hover{
+
+    background:#0056b3;
+
+}
+
+/* ===========================
+   TASK CONTAINER
+=========================== */
+
+.task-container{
+
+    min-height:350px;
+
+    padding:5px;
+
+}
+
+/* ===========================
+   TASK CARD
+=========================== */
+
+.task{
+
+    background:#28a745;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    margin-bottom:12px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    cursor:grab;
+
+    transition:0.3s;
+
+}
+
+.task:hover{
+
+    transform:scale(1.02);
+
+}
+
+.task:active{
+
+    cursor:grabbing;
+
+}
+
+/* ===========================
+   PRIORITY BADGE
+=========================== */
+
+.priority{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-left:10px;
+
+}
+
+/* ===========================
+   DELETE BUTTON
+=========================== */
+
+.delete{
+
+    width:auto;
+
+    background:red;
+
+    color:white;
+
+    border:none;
+
+    border-radius:5px;
+
+    padding:6px 10px;
+
+    cursor:pointer;
+
+    margin:0;
+
+    transition:0.3s;
+
+}
+
+.delete:hover{
+
+    background:darkred;
+
+}
+
+/* ===========================
+   DRAG OVER EFFECT
+=========================== */
+
+.task-container.drag-over{
+
+    background:#dbeafe;
+
+    border:2px dashed #007bff;
+
+    border-radius:8px;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+    .board{
+
+        flex-direction:column;
+
+    }
+
+    .column{
+
+        width:100%;
+
+    }
+
+}
