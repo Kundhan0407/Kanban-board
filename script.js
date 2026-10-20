@@ -30,7 +30,7 @@ function addTask() {
     const selectedPriority = priority.value;
 
     // Send task to backend
-    fetch("http://localhost:3000/tasks", {
+    fetch("https://kanban-board-n42v.onrender.com/tasks", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -107,7 +107,7 @@ editBtn.addEventListener("click", function () {
         return;
     }
 
-    fetch(`http://localhost:3000/tasks/${taskId}`, {
+    fetch(`https://kanban-board-n42v.onrender.com/tasks/${taskId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -171,7 +171,7 @@ deleteBtn.addEventListener("click", function () {
         return;
     }
 
-    fetch(`http://localhost:3000/tasks/${taskId}`, {
+    fetch(`https://kanban-board-n42v.onrender.com/tasks/${taskId}`, {
         method: "DELETE"
     })
     .then(response => {
@@ -306,7 +306,7 @@ function loadTasks() {
 }
 
 // loadTasks();
-fetch("http://localhost:3000/tasks")
+fetch("https://kanban-board-n42v.onrender.com/tasks")
     .then(response => response.json())
     .then(data => {
 
