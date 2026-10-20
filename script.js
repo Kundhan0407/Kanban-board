@@ -27,19 +27,44 @@ function addTask() {
         return;
     }
 
-    const task = createTask(text, priority.value);
+    const selectedPriority = priority.value;
 
-    todo.appendChild(task);
+    // Send task to backend
+    fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: text,
+            priority: selectedPriority
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
 
-    saveTasks();
+        console.log("Task added to backend:", data);
 
-    input.value = "";
-    priority.value = "High";
+        // Create task on the webpage
+        const task = createTask(data.title, data.priority);
+        task.dataset.id=data.id;
+
+        todo.appendChild(task);
+
+        // Clear input
+        input.value = "";
+        priority.value = "High";
+    })
+    .catch(error => {
+        console.error("Error adding task:", error);
+        alert("Could not connect to backend.");
+    });
 }
 
 // ==============================
 // Create Task
 // ==============================
+
 
 function createTask(text, level) {
 
@@ -61,6 +86,54 @@ function createTask(text, level) {
     const span = document.createElement("span");
     span.textContent = text;
 
+    // Edit Button
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✏️";
+    editBtn.className = "edit";
+
+    
+editBtn.addEventListener("click", function () {
+
+    const newText = prompt("Edit your task:", span.textContent);
+
+    if (newText === null || newText.trim() === "") {
+        return;
+    }
+
+    const taskId = card.dataset.id;
+
+    if (!taskId) {
+        alert("This task has no backend ID.");
+        return;
+    }
+
+    fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: newText.trim()
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Could not update task.");
+        }
+
+        return response.json();
+    })
+    .then(updatedTask => {
+        span.textContent = updatedTask.title;
+    })
+    .catch(error => {
+        console.error("Edit failed:", error);
+        alert("Could not update the task in the backend.");
+    });
+
+});
+
+
     // Priority Badge
     const badge = document.createElement("span");
     badge.className = "priority";
@@ -68,11 +141,9 @@ function createTask(text, level) {
 
     if (level === "High") {
         badge.style.color = "#ff4d4d";
-    }
-    else if (level === "Medium") {
+    } else if (level === "Medium") {
         badge.style.color = "orange";
-    }
-    else {
+    } else {
         badge.style.color = "lime";
     }
 
@@ -85,34 +156,39 @@ function createTask(text, level) {
     left.appendChild(span);
     left.appendChild(badge);
 
-    // Edit Button
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "✏️";
-    editBtn.className = "edit";
-
-    editBtn.addEventListener("click", function () {
-
-        const newText = prompt("Edit your task:", span.textContent);
-
-        if (newText !== null && newText.trim() !== "") {
-            span.textContent = newText.trim();
-            saveTasks();
-        }
-
-    });
-
     // Delete Button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "❌";
     deleteBtn.className = "delete";
 
-    deleteBtn.addEventListener("click", function () {
+    
+deleteBtn.addEventListener("click", function () {
+
+    const taskId = card.dataset.id;
+
+    if (!taskId) {
+        alert("This task has no backend ID.");
+        return;
+    }
+
+    fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Could not delete task from backend.");
+        }
 
         card.remove();
-
         saveTasks();
-
+    })
+    .catch(error => {
+        console.error("Delete failed:", error);
+        alert("Could not delete the task from the backend.");
     });
+
+});
+
 
     // Add buttons to card
     card.appendChild(left);
@@ -229,4 +305,23 @@ function loadTasks() {
 
 }
 
-loadTasks();
+// loadTasks();
+fetch("http://localhost:3000/tasks")
+    .then(response => response.json())
+    .then(data => {
+
+        console.log("Tasks received from backend:", data);
+
+        data.forEach(task => {
+
+            const taskCard = createTask(task.title, task.priority);
+            taskCard.dataset.id=task.id;
+
+            todo.appendChild(taskCard);
+
+        });
+
+    })
+    .catch(error => {
+        console.error("Backend connection failed:", error);
+    });
